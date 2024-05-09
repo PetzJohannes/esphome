@@ -16,7 +16,8 @@ from esphome.const import (
 
 
 CODEOWNERS = ["@PetzJohannes"]
-
+DEPENDENCIES = ["fan"]
+AUTO_LOAD = ["fan"]
 
 cosmos_ns = cg.esphome_ns.namespace("cosmos")
 CosmosFan = cosmos_ns.class_("CosmosFan", cg.Component, fan.Fan)
