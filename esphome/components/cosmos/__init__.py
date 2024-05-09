@@ -18,6 +18,7 @@ print("TEST cosmos")
 
 
 CODEOWNERS = ["@PetzJohannes"]
+AUTO_LOAD = ["fan", "cosmos"]
 
 cosmos_ns = cg.esphome_ns.namespace("cosmos")
 CosmosFan = cosmos_ns.class_("CosmosFan", cg.Component, fan.Fan)
