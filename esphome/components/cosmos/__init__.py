@@ -52,6 +52,7 @@ CONFIG_SCHEMA = fan.FAN_SCHEMA.extend(
     maybe_simple_id({cv.Required(CONF_ID): cv.use_id(CosmosFan)}),
 )
 async def fan_cosmos_brake_to_code(config, action_id, template_arg, args):
+    print("COSMOS REGISTER ACTION")
     paren = await cg.get_variable(config[CONF_ID])
     return cg.new_Pvariable(action_id, template_arg, paren)
 
