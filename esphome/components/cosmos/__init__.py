@@ -14,7 +14,7 @@ from esphome.const import (
     CONF_PRESET_MODES,
 )
 
-print("TEST")
+print("TEST cosmos")
 
 
 CODEOWNERS = ["@PetzJohannes"]
@@ -57,6 +57,7 @@ async def fan_cosmos_brake_to_code(config, action_id, template_arg, args):
 
 
 async def to_code(config):
+    print("COSMOS TO CONFIG")
     var = cg.new_Pvariable(
         config[CONF_ID],
         config[CONF_SPEED_COUNT],
