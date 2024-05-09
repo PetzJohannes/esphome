@@ -55,6 +55,7 @@ async def fan_cosmos_brake_to_code(config, action_id, template_arg, args):
 
 
 async def to_code(config):
+    print("TEST")
     var = cg.new_Pvariable(
         config[CONF_ID],
         config[CONF_SPEED_COUNT],
