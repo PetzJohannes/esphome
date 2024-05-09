@@ -16,8 +16,6 @@ from esphome.const import (
 
 
 CODEOWNERS = ["@PetzJohannes"]
-DEPENDENCIES = ["fan"]
-AUTO_LOAD = ["fan"]
 
 cosmos_ns = cg.esphome_ns.namespace("cosmos")
 CosmosFan = cosmos_ns.class_("CosmosFan", cg.Component, fan.Fan)
@@ -56,21 +54,21 @@ async def fan_cosmos_brake_to_code(config, action_id, template_arg, args):
     return cg.new_Pvariable(action_id, template_arg, paren)
 
 
-async def to_code(config):
+def to_code(config):
     var = cg.new_Pvariable(
         config[CONF_ID],
         config[CONF_SPEED_COUNT],
         config[CONF_DECAY_MODE],
     )
-    await cg.register_component(var, config)
-    await fan.register_fan(var, config)
-    pin_a_ = await cg.get_variable(config[CONF_PIN_A])
+    cg.register_component(var, config)
+    fan.register_fan(var, config)
+    pin_a_ = cg.get_variable(config[CONF_PIN_A])
     cg.add(var.set_pin_a(pin_a_))
-    pin_b_ = await cg.get_variable(config[CONF_PIN_B])
+    pin_b_ = cg.get_variable(config[CONF_PIN_B])
     cg.add(var.set_pin_b(pin_b_))
 
     if CONF_ENABLE_PIN in config:
-        enable_pin = await cg.get_variable(config[CONF_ENABLE_PIN])
+        enable_pin = cg.get_variable(config[CONF_ENABLE_PIN])
         cg.add(var.set_enable_pin(enable_pin))
 
     if CONF_PRESET_MODES in config:
