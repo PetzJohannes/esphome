@@ -13,12 +13,12 @@ from esphome.const import (
     CONF_ENABLE_PIN,
     CONF_PRESET_MODES,
 )
-from .. import cosmos_ns
 
 
 CODEOWNERS = ["@PetzJohannes"]
 
 
+cosmos_ns = cg.esphome_ns.namespace("cosmos")
 CosmosFan = cosmos_ns.class_("CosmosFan", cg.Component, fan.Fan)
 
 DecayMode = cosmos_ns.enum("DecayMode")
