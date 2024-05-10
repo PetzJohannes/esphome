@@ -19,7 +19,7 @@ print("TEST cosmos")
 
 CODEOWNERS = ["@PetzJohannes"]
 
-cosmos_ns = cg.esphome_ns.namespace("cosmos")
+cosmos_ns = cg.esphome_ns.namespace("fan.cosmos")
 CosmosFan = cosmos_ns.class_("CosmosFan", cg.Component, fan.Fan)
 
 DecayMode = cosmos_ns.enum("DecayMode")
