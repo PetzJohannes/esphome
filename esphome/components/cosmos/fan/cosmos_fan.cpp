@@ -47,7 +47,7 @@ void CosmosFan::dump_config() {
     ESP_LOGCONFIG(TAG, "  Decay Mode: Fast");
   }
 }
-
+// todo: control the correct stuff
 void CosmosFan::control(const fan::FanCall &call) {
   if (call.get_state().has_value())
     this->state = *call.get_state();
@@ -66,24 +66,11 @@ void CosmosFan::control(const fan::FanCall &call) {
 void CosmosFan::write_state_() {
   float speed = this->state ? static_cast<float>(this->speed) / static_cast<float>(this->speed_count_) : 0.0f;
   if (speed == 0.0f) {  // off means idle
-    (this->enable_ == nullptr) ? this->set_hbridge_levels_(speed, speed)
-                               : this->set_hbridge_levels_(speed, speed, speed);
+    this->set_hbridge_levels_(0.5f + 0.06f, 1.0f);
   } else if (this->direction == fan::FanDirection::FORWARD) {
-    if (this->decay_mode_ == DECAY_MODE_SLOW) {
-      (this->enable_ == nullptr) ? this->set_hbridge_levels_(1.0f - speed, 1.0f)
-                                 : this->set_hbridge_levels_(1.0f - speed, 1.0f, 1.0f);
-    } else {  // DECAY_MODE_FAST
-      (this->enable_ == nullptr) ? this->set_hbridge_levels_(0.0f, speed)
-                                 : this->set_hbridge_levels_(0.0f, 1.0f, speed);
-    }
+    this->set_hbridge_levels_((0.46f + 0.06f) * speed, 1.0f);
   } else {  // fan::FAN_DIRECTION_REVERSE
-    if (this->decay_mode_ == DECAY_MODE_SLOW) {
-      (this->enable_ == nullptr) ? this->set_hbridge_levels_(1.0f, 1.0f - speed)
-                                 : this->set_hbridge_levels_(1.0f, 1.0f - speed, 1.0f);
-    } else {  // DECAY_MODE_FAST
-      (this->enable_ == nullptr) ? this->set_hbridge_levels_(speed, 0.0f)
-                                 : this->set_hbridge_levels_(1.0f, 0.0f, speed);
-    }
+    this->set_hbridge_levels_((speed * (1f - (0.54f + 0.06f))) + (0.54f + 0.06f), 1.0f);
   }
 
   if (this->oscillating_ != nullptr)

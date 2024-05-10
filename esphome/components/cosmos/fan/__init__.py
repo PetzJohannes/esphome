@@ -14,9 +14,6 @@ from esphome.const import (
     CONF_PRESET_MODES,
 )
 
-print("TEST cosmos")
-
-
 CODEOWNERS = ["@PetzJohannes"]
 
 cosmos_ns = cg.esphome_ns.namespace("cosmos")
@@ -57,7 +54,6 @@ async def fan_cosmos_brake_to_code(config, action_id, template_arg, args):
     return cg.new_Pvariable(action_id, template_arg, paren)
 
 async def to_code(config):
-    print("COSMOS TO CODE")
     var = cg.new_Pvariable(
         config[CONF_ID],
         config[CONF_SPEED_COUNT],
