@@ -74,7 +74,9 @@ void CosmosFan::write_state_() {
     this->set_hbridge_levels_((speed * (1.0f - (0.54f + 0.06f))) + (0.54f + 0.06f), 1.0f);
   }
   */
+  this->set_hbridge_levels_(speed, 1.0f);
 
+  /**
   if (speed == 0.0f) {  // off means idle
     this->set_hbridge_levels_(0.5f, 1.0f);
   } else if (this->direction == fan::FanDirection::FORWARD) {
@@ -82,6 +84,7 @@ void CosmosFan::write_state_() {
   } else {  // fan::FAN_DIRECTION_REVERSE
     this->set_hbridge_levels_((speed * (1.0f - 0.54f)) + 0.6f, 1.0f);
   }
+  */
 
   if (this->oscillating_ != nullptr)
     this->oscillating_->set_state(this->oscillating);
