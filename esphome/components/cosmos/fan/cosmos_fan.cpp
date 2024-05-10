@@ -70,7 +70,7 @@ void CosmosFan::write_state_() {
   } else if (this->direction == fan::FanDirection::FORWARD) {
     this->set_hbridge_levels_((0.46f + 0.06f) * speed, 1.0f);
   } else {  // fan::FAN_DIRECTION_REVERSE
-    this->set_hbridge_levels_((speed * (1f - (0.54f + 0.06f))) + (0.54f + 0.06f), 1.0f);
+    this->set_hbridge_levels_((speed * (1.0f - (0.54f + 0.06f))) + (0.54f + 0.06f), 1.0f);
   }
 
   if (this->oscillating_ != nullptr)

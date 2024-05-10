@@ -22,3 +22,10 @@ Break: 50 + Verschiebung / 2
 50% Reverse Speed: (53 + Verschiebung) * 50% * 100% = 88,5
 0% Forward Speed: (47 + Verschiebung) * 0% = 0
 0% Reverse Speed: (53 + Verschiebung) * 0% * 100% = 0
+
+
+
+# todo
+- Verschiebungswert konfigurierbar machen
+- Decay Mode ausbauen
+- Default Wert auf break setzen ?
