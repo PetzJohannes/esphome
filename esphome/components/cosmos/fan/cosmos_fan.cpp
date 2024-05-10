@@ -23,7 +23,7 @@ void CosmosFan::set_hbridge_levels_(float a_level, float b_level, float enable) 
 
 fan::FanCall CosmosFan::brake() {
   ESP_LOGD(TAG, "Braking");
-  (this->enable_ == nullptr) ? this->set_hbridge_levels_(1.0f, 1.0f) : this->set_hbridge_levels_(1.0f, 1.0f, 1.0f);
+  this->set_hbridge_levels_(0.5f + 0.06f, 1.0f);
   return this->make_call().set_state(false);
 }
 
@@ -68,7 +68,7 @@ void CosmosFan::write_state_() {
   if (speed == 0.0f) {  // off means idle
     this->set_hbridge_levels_(0.5f + 0.06f, 1.0f);
   } else if (this->direction == fan::FanDirection::FORWARD) {
-    this->set_hbridge_levels_((0.46f + 0.06f) * speed, 1.0f);
+    this->set_hbridge_levels_((0.46f + 0.06f) * (1.0f - speed), 1.0f);
   } else {  // fan::FAN_DIRECTION_REVERSE
     this->set_hbridge_levels_((speed * (1.0f - (0.54f + 0.06f))) + (0.54f + 0.06f), 1.0f);
   }
