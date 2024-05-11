@@ -31,7 +31,7 @@ class CosmosFan : public Component, public fan::Fan {
   output::FloatOutput *pin_b_;
   float brake_start_level_;
   float brake_end_level_;
-  float brake_stop_level_;
+  float brake_stop_level_{nullptr};
   output::BinaryOutput *oscillating_{nullptr};
   int speed_count_{};
   fan::FanTraits traits_;
