@@ -14,7 +14,7 @@ void CosmosFan::set_hbridge_levels_(float a_level, float b_level) {
 
 fan::FanCall CosmosFan::brake() {
   ESP_LOGD(TAG, "Braking");
-  this->set_hbridge_levels_(0.44f, 1.0f);
+  this->set_hbridge_levels_(this->get_brake_stop_level_(), 1.0f);
   return this->make_call().set_state(false);
 }
 
@@ -51,15 +51,24 @@ void CosmosFan::write_state_() {
   float speed = this->state ? static_cast<float>(this->speed) / static_cast<float>(this->speed_count_) : 0.0f;
   
   if (speed == 0.0f) {  // off means idle
-    this->set_hbridge_levels_(0.44f, 1.0f);
+    this->set_hbridge_levels_(this->get_brake_stop_level_(), 1.0f);
   } else if (this->direction == fan::FanDirection::FORWARD) {
-    this->set_hbridge_levels_(0.41f * (1.0f - speed), 1.0f);
+    this->set_hbridge_levels_(this->brake_start_level_ * (1.0f - speed), 1.0f);
   } else {  // fan::FAN_DIRECTION_REVERSE
-    this->set_hbridge_levels_((speed * (1.0f - 0.47f)) + 0.47f, 1.0f);
+    this->set_hbridge_levels_((speed * (1.0f - this->brake_end_level_)) + this->brake_end_level_, 1.0f);
   }
 
   if (this->oscillating_ != nullptr)
     this->oscillating_->set_state(this->oscillating);
+}
+
+float CosmosFan::get_brake_stop_level_() {
+  if (this->brake_stop_level_ == NULL) {
+    // todo get middle of start and end values
+    return (this->brake_stop_level_ - this->brake_start_level_) / 2.0f;
+  }
+
+  return this->brake_stop_level_;
 }
 
 }  // namespace cosmos

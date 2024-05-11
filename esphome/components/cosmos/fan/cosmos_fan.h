@@ -16,6 +16,9 @@ class CosmosFan : public Component, public fan::Fan {
 
   void set_pin_a(output::FloatOutput *pin_a) { pin_a_ = pin_a; }
   void set_pin_b(output::FloatOutput *pin_b) { pin_b_ = pin_b; }
+  void set_brake_start_level(float *brake_start_level) { brake_start_level_ = brake_start_level; }
+  void set_brake_end_level(float *brake_end_level) { brake_end_level_ = brake_end_level; }
+  void set_brake_stop_level(float *brake_stop_level) { brake_stop_level_ = brake_stop_level; }
 
   void setup() override;
   void dump_config() override;
@@ -26,6 +29,9 @@ class CosmosFan : public Component, public fan::Fan {
  protected:
   output::FloatOutput *pin_a_;
   output::FloatOutput *pin_b_;
+  float *brake_start_level_;
+  float *brake_end_level_;
+  float *brake_stop_level_;
   output::BinaryOutput *oscillating_{nullptr};
   int speed_count_{};
   fan::FanTraits traits_;
@@ -34,6 +40,8 @@ class CosmosFan : public Component, public fan::Fan {
   void write_state_();
 
   void set_hbridge_levels_(float a_level, float b_level);
+
+  float get_brake_stop_level_();
 };
 
 template<typename... Ts> class BrakeAction : public Action<Ts...> {

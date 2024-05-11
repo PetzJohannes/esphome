@@ -12,6 +12,10 @@ from esphome.const import (
 
 CODEOWNERS = ["@PetzJohannes"]
 
+CONF_BRAKE_START_LEVEL = 'brake_start_level'
+CONF_BRAKE_STOP_LEVEL = 'brake_stop_level'
+CONF_BRAKE_END_LEVEL = 'brake_end_level'
+
 cosmos_ns = cg.esphome_ns.namespace("cosmos")
 CosmosFan = cosmos_ns.class_("CosmosFan", cg.Component, fan.Fan)
 
@@ -24,6 +28,9 @@ CONFIG_SCHEMA = fan.FAN_SCHEMA.extend(
         cv.Required(CONF_PIN_A): cv.use_id(output.FloatOutput),
         cv.Required(CONF_PIN_B): cv.use_id(output.FloatOutput),
         cv.Optional(CONF_SPEED_COUNT, default=100): cv.int_range(min=1),
+        cv.Optional(CONF_BRAKE_START_LEVEL, default=41): cv.float_range(min=1, max=100),
+        cv.Optional(CONF_BRAKE_STOP_LEVEL): cv.float_range(min=1, max=100),
+        cv.Optional(CONF_BRAKE_END_LEVEL, default=47): cv.float_range(min=1, max=100),
     }
 ).extend(cv.COMPONENT_SCHEMA)
 
@@ -42,6 +49,8 @@ async def to_code(config):
     var = cg.new_Pvariable(
         config[CONF_ID],
         config[CONF_SPEED_COUNT],
+        config[CONF_BRAKE_START_LEVEL],
+        config[CONF_BRAKE_END_LEVEL],
     )
     await cg.register_component(var, config)
     await fan.register_fan(var, config)
@@ -49,3 +58,11 @@ async def to_code(config):
     cg.add(var.set_pin_a(pin_a_))
     pin_b_ = await cg.get_variable(config[CONF_PIN_B])
     cg.add(var.set_pin_b(pin_b_))
+    brake_start_level = await cg.get_variable(config[CONF_BRAKE_START_LEVEL])
+    cg.add(var.set_brake_start_level(brake_start_level))
+    brake_end_level = await cg.get_variable(config[CONF_BRAKE_END_LEVEL])
+    cg.add(var.set_brake_end_level(brake_end_level))
+
+    if CONF_BRAKE_STOP_LEVEL in config:
+        brake_stop_level = await cg.get_variable(config[CONF_BRAKE_STOP_LEVEL])
+        cg.add(var.set_brake_stop_level(brake_stop_level))
