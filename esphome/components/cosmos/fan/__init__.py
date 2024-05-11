@@ -28,9 +28,9 @@ CONFIG_SCHEMA = fan.FAN_SCHEMA.extend(
         cv.Required(CONF_PIN_A): cv.use_id(output.FloatOutput),
         cv.Required(CONF_PIN_B): cv.use_id(output.FloatOutput),
         cv.Optional(CONF_SPEED_COUNT, default=100): cv.int_range(min=1),
-        cv.Optional(CONF_BRAKE_START_LEVEL, default=41): cv.float_range(min=1, max=100),
-        cv.Optional(CONF_BRAKE_STOP_LEVEL): cv.float_range(min=1, max=100),
-        cv.Optional(CONF_BRAKE_END_LEVEL, default=47): cv.float_range(min=1, max=100),
+        cv.Optional(CONF_BRAKE_START_LEVEL, default=41): cv.zero_to_one_float,
+        cv.Optional(CONF_BRAKE_STOP_LEVEL): cv.zero_to_one_float,
+        cv.Optional(CONF_BRAKE_END_LEVEL, default=47): cv.zero_to_one_float,
     }
 ).extend(cv.COMPONENT_SCHEMA)
 
