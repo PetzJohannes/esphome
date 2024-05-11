@@ -6,7 +6,6 @@ from esphome.components import fan, output
 from esphome.components.fan import validate_preset_modes
 from esphome.const import (
     CONF_ID,
-    CONF_DECAY_MODE,
     CONF_SPEED_COUNT,
     CONF_PIN_A,
     CONF_PIN_B,
@@ -19,12 +18,6 @@ CODEOWNERS = ["@PetzJohannes"]
 cosmos_ns = cg.esphome_ns.namespace("cosmos")
 CosmosFan = cosmos_ns.class_("CosmosFan", cg.Component, fan.Fan)
 
-DecayMode = cosmos_ns.enum("DecayMode")
-DECAY_MODE_OPTIONS = {
-    "SLOW": DecayMode.DECAY_MODE_SLOW,
-    "FAST": DecayMode.DECAY_MODE_FAST,
-}
-
 # Actions
 BrakeAction = cosmos_ns.class_("BrakeAction", automation.Action)
 
@@ -33,9 +26,6 @@ CONFIG_SCHEMA = fan.FAN_SCHEMA.extend(
         cv.GenerateID(CONF_ID): cv.declare_id(CosmosFan),
         cv.Required(CONF_PIN_A): cv.use_id(output.FloatOutput),
         cv.Required(CONF_PIN_B): cv.use_id(output.FloatOutput),
-        cv.Optional(CONF_DECAY_MODE, default="SLOW"): cv.enum(
-            DECAY_MODE_OPTIONS, upper=True
-        ),
         cv.Optional(CONF_SPEED_COUNT, default=100): cv.int_range(min=1),
         cv.Optional(CONF_ENABLE_PIN): cv.use_id(output.FloatOutput),
         cv.Optional(CONF_PRESET_MODES): validate_preset_modes,
@@ -57,7 +47,6 @@ async def to_code(config):
     var = cg.new_Pvariable(
         config[CONF_ID],
         config[CONF_SPEED_COUNT],
-        config[CONF_DECAY_MODE],
     )
     await cg.register_component(var, config)
     await fan.register_fan(var, config)

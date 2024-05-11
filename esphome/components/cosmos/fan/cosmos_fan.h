@@ -10,14 +10,9 @@
 namespace esphome {
 namespace cosmos {
 
-enum DecayMode {
-  DECAY_MODE_SLOW = 0,
-  DECAY_MODE_FAST = 1,
-};
-
 class CosmosFan : public Component, public fan::Fan {
  public:
-  CosmosFan(int speed_count, DecayMode decay_mode) : speed_count_(speed_count), decay_mode_(decay_mode) {}
+  CosmosFan(int speed_count) : speed_count_(speed_count) {}
 
   void set_pin_a(output::FloatOutput *pin_a) { pin_a_ = pin_a; }
   void set_pin_b(output::FloatOutput *pin_b) { pin_b_ = pin_b; }
@@ -36,7 +31,6 @@ class CosmosFan : public Component, public fan::Fan {
   output::FloatOutput *enable_{nullptr};
   output::BinaryOutput *oscillating_{nullptr};
   int speed_count_{};
-  DecayMode decay_mode_{DECAY_MODE_SLOW};
   fan::FanTraits traits_;
   std::set<std::string> preset_modes_{};
 

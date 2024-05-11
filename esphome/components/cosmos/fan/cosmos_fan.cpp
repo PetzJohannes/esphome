@@ -12,15 +12,6 @@ void CosmosFan::set_hbridge_levels_(float a_level, float b_level) {
   ESP_LOGD(TAG, "Setting speed: a: %.2f, b: %.2f", a_level, b_level);
 }
 
-// constant IN1/IN2, PWM on EN => power control, fast current decay
-// constant IN1/EN, PWM on IN2 => power control, slow current decay
-void CosmosFan::set_hbridge_levels_(float a_level, float b_level, float enable) {
-  this->pin_a_->set_level(a_level);
-  this->pin_b_->set_level(b_level);
-  this->enable_->set_level(enable);
-  ESP_LOGD(TAG, "Setting speed: a: %.2f, b: %.2f, enable: %.2f", a_level, b_level, enable);
-}
-
 fan::FanCall CosmosFan::brake() {
   ESP_LOGD(TAG, "Braking");
   this->set_hbridge_levels_(0.44f, 1.0f);
@@ -41,13 +32,8 @@ void CosmosFan::setup() {
 
 void CosmosFan::dump_config() {
   LOG_FAN("", "Cosmos Fan", this);
-  if (this->decay_mode_ == DECAY_MODE_SLOW) {
-    ESP_LOGCONFIG(TAG, "  Decay Mode: Slow");
-  } else {
-    ESP_LOGCONFIG(TAG, "  Decay Mode: Fast");
-  }
 }
-// todo: control the correct stuff
+
 void CosmosFan::control(const fan::FanCall &call) {
   if (call.get_state().has_value())
     this->state = *call.get_state();
@@ -65,17 +51,6 @@ void CosmosFan::control(const fan::FanCall &call) {
 
 void CosmosFan::write_state_() {
   float speed = this->state ? static_cast<float>(this->speed) / static_cast<float>(this->speed_count_) : 0.0f;
-  /**
-  if (speed == 0.0f) {  // off means idle
-    this->set_hbridge_levels_(0.5f + 0.06f, 1.0f);
-  } else if (this->direction == fan::FanDirection::FORWARD) {
-    this->set_hbridge_levels_((0.46f + 0.06f) * (1.0f - speed), 1.0f);
-  } else {  // fan::FAN_DIRECTION_REVERSE
-    this->set_hbridge_levels_((speed * (1.0f - (0.54f + 0.06f))) + (0.54f + 0.06f), 1.0f);
-  }
-  */
-  //this->set_hbridge_levels_(speed, 1.0f);
-
   
   if (speed == 0.0f) {  // off means idle
     this->set_hbridge_levels_(0.44f, 1.0f);

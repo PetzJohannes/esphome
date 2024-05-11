@@ -26,6 +26,6 @@ Break: 50 + Verschiebung / 2
 
 
 # todo
-- Max Forward, Min Reverse, Brake konfigurierbar machen
-- Decay Mode ausbauen
-- Default Wert auf break setzen ?
+- [ ] Max Forward, Min Reverse, Brake konfigurierbar machen
+- [ ] Decay Mode ausbauen
+- [ ] Default Wert auf break setzen ?
