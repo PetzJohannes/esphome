@@ -12,12 +12,10 @@ namespace cosmos {
 
 class CosmosFan : public Component, public fan::Fan {
  public:
-  CosmosFan(int speed_count) : speed_count_(speed_count) {}
+  CosmosFan(int speed_count, float brake_start_level, float brake_end_level) : speed_count_(speed_count), brake_start_level_(brake_start_level), brake_end_level_(brake_end_level) {}
 
   void set_pin_a(output::FloatOutput *pin_a) { pin_a_ = pin_a; }
   void set_pin_b(output::FloatOutput *pin_b) { pin_b_ = pin_b; }
-  void set_brake_start_level(float brake_start_level) { brake_start_level_ = brake_start_level; }
-  void set_brake_end_level(float brake_end_level) { brake_end_level_ = brake_end_level; }
   void set_brake_stop_level(float brake_stop_level) { brake_stop_level_ = brake_stop_level; }
 
   void setup() override;
