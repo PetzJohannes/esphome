@@ -27,7 +27,6 @@ void CosmosFan::setup() {
 
   // Construct traits
   this->traits_ = fan::FanTraits(this->oscillating_ != nullptr, true, true, this->speed_count_);
-  this->traits_.set_supported_preset_modes(this->preset_modes_);
 }
 
 void CosmosFan::dump_config() {
@@ -43,7 +42,6 @@ void CosmosFan::control(const fan::FanCall &call) {
     this->oscillating = *call.get_oscillating();
   if (call.get_direction().has_value())
     this->direction = *call.get_direction();
-  this->preset_mode = call.get_preset_mode();
 
   this->write_state_();
   this->publish_state();

@@ -16,7 +16,6 @@ class CosmosFan : public Component, public fan::Fan {
 
   void set_pin_a(output::FloatOutput *pin_a) { pin_a_ = pin_a; }
   void set_pin_b(output::FloatOutput *pin_b) { pin_b_ = pin_b; }
-  void set_preset_modes(const std::set<std::string> &presets) { preset_modes_ = presets; }
 
   void setup() override;
   void dump_config() override;
@@ -30,7 +29,6 @@ class CosmosFan : public Component, public fan::Fan {
   output::BinaryOutput *oscillating_{nullptr};
   int speed_count_{};
   fan::FanTraits traits_;
-  std::set<std::string> preset_modes_{};
 
   void control(const fan::FanCall &call) override;
   void write_state_();
