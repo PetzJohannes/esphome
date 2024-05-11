@@ -27,7 +27,7 @@ CONFIG_SCHEMA = fan.FAN_SCHEMA.extend(
         cv.GenerateID(CONF_ID): cv.declare_id(CosmosFan),
         cv.Required(CONF_PIN_A): cv.use_id(output.FloatOutput),
         cv.Required(CONF_PIN_B): cv.use_id(output.FloatOutput),
-        cv.Optional(CONF_SPEED_COUNT, default=0): cv.int_range(min=0),
+        cv.Optional(CONF_SPEED_COUNT, default=100): cv.int_range(min=1),
         cv.Optional(CONF_BRAKE_START_LEVEL, default=0.41): cv.zero_to_one_float,
         cv.Optional(CONF_BRAKE_STOP_LEVEL): cv.zero_to_one_float,
         cv.Optional(CONF_BRAKE_END_LEVEL, default=0.47): cv.zero_to_one_float,
