@@ -64,7 +64,7 @@ void CosmosFan::write_state_() {
 
 float CosmosFan::get_brake_stop_level_() {
   if (this->brake_stop_level_ == -1.0f) {
-    float brake_stop_level = (this->brake_end_level_ - this->brake_start_level_) / 2.0f;
+    float brake_stop_level = (this->brake_end_level_ - this->brake_start_level_) / 2.0f + this->brake_start_level_;
     ESP_LOGD(TAG, "Brake stop level calculated: %.2f", brake_stop_level);
     return brake_stop_level;
   }
