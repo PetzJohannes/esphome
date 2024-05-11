@@ -63,8 +63,7 @@ void CosmosFan::write_state_() {
 }
 
 float CosmosFan::get_brake_stop_level_() {
-  if (this->brake_stop_level_ == NULL) {
-    // todo get middle of start and end values
+  if (this->brake_stop_level_ == nullptr) {
     return (this->brake_stop_level_ - this->brake_start_level_) / 2.0f;
   }
 
