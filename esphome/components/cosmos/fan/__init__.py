@@ -58,11 +58,11 @@ async def to_code(config):
     cg.add(var.set_pin_a(pin_a_))
     pin_b_ = await cg.get_variable(config[CONF_PIN_B])
     cg.add(var.set_pin_b(pin_b_))
-    brake_start_level = await cg.get_variable(config[CONF_BRAKE_START_LEVEL])
-    cg.add(var.set_brake_start_level(brake_start_level))
-    brake_end_level = await cg.get_variable(config[CONF_BRAKE_END_LEVEL])
-    cg.add(var.set_brake_end_level(brake_end_level))
+    brake_start_level_ = await cg.get_variable(config[CONF_BRAKE_START_LEVEL])
+    cg.add(var.set_brake_start_level(brake_start_level_))
+    brake_end_level_ = await cg.get_variable(config[CONF_BRAKE_END_LEVEL])
+    cg.add(var.set_brake_end_level(brake_end_level_))
 
     if CONF_BRAKE_STOP_LEVEL in config:
-        brake_stop_level = await cg.get_variable(config[CONF_BRAKE_STOP_LEVEL])
-        cg.add(var.set_brake_stop_level(brake_stop_level))
+        brake_stop_level_ = await cg.get_variable(config[CONF_BRAKE_STOP_LEVEL])
+        cg.add(var.set_brake_stop_level(brake_stop_level_))
