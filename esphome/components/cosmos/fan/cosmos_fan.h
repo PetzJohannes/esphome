@@ -16,7 +16,6 @@ class CosmosFan : public Component, public fan::Fan {
 
   void set_pin_a(output::FloatOutput *pin_a) { pin_a_ = pin_a; }
   void set_pin_b(output::FloatOutput *pin_b) { pin_b_ = pin_b; }
-  void set_enable_pin(output::FloatOutput *enable) { enable_ = enable; }
   void set_preset_modes(const std::set<std::string> &presets) { preset_modes_ = presets; }
 
   void setup() override;
@@ -28,7 +27,6 @@ class CosmosFan : public Component, public fan::Fan {
  protected:
   output::FloatOutput *pin_a_;
   output::FloatOutput *pin_b_;
-  output::FloatOutput *enable_{nullptr};
   output::BinaryOutput *oscillating_{nullptr};
   int speed_count_{};
   fan::FanTraits traits_;
@@ -38,7 +36,6 @@ class CosmosFan : public Component, public fan::Fan {
   void write_state_();
 
   void set_hbridge_levels_(float a_level, float b_level);
-  void set_hbridge_levels_(float a_level, float b_level, float enable);
 };
 
 template<typename... Ts> class BrakeAction : public Action<Ts...> {
