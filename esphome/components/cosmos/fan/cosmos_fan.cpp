@@ -29,6 +29,14 @@ void CosmosFan::setup() {
   this->traits_ = fan::FanTraits(this->oscillating_ != nullptr, true, true, this->speed_count_);
 }
 
+void CosmosFan::set_direction(FanDirection direction) {
+  this->direction_ = direction;
+}
+
+void CosmosFan::set_speed(int speed) {
+  this-speed_ = speed;
+}
+
 void CosmosFan::dump_config() {
   LOG_FAN("", "Cosmos Fan", this);
 }
