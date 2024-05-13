@@ -29,7 +29,7 @@ void CosmosFan::setup() {
   this->traits_ = fan::FanTraits(this->oscillating_ != nullptr, true, true, this->speed_count_);
 }
 
-void CosmosFan::set_direction(FanDirection direction) {
+void CosmosFan::set_direction(esphome::fan::FanDirection direction) {
   this->direction_ = direction;
 }
 

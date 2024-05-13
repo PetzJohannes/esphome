@@ -17,7 +17,7 @@ class CosmosFan : public Component, public fan::Fan {
   void set_pin_a(output::FloatOutput *pin_a) { pin_a_ = pin_a; }
   void set_pin_b(output::FloatOutput *pin_b) { pin_b_ = pin_b; }
   void set_brake_stop_level(float brake_stop_level) { brake_stop_level_ = brake_stop_level; }
-  void set_direction(FanDirection direction);
+  void set_direction(esphome::fan::FanDirection direction);
   void set_speed(int speed);
 
   void setup() override;
